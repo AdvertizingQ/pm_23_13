@@ -32,7 +32,8 @@ const html_task = () => {
 // --- SCSS таска ---
 const scss_task = () => {
     return src([
-        'app/scss/**/*.scss'
+        'app/scss/**/*.scss',
+        'app/component/**/*.scss'
     ])
         .pipe(sass().on('error', sass.logError))
         .pipe(concat('style.min.css'))
