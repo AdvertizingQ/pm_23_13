@@ -1,7 +1,8 @@
-// Select the button element
-const button = document.querySelector('button');
+// Trigger contact alert when a visitor clicks the CTA button.
+const contactButton = document.getElementById("contactButton");
 
-// Add a click event listener to the button
-button.addEventListener('click', () => {
-    alert('УРА');
-});
+if (contactButton) {
+  contactButton.addEventListener("click", () => {
+    alert("Дякую за інтерес! Напишіть мені на youremail@namehere");
+  });
+}

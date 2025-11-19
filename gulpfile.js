@@ -1,68 +1,86 @@
-"use strict";
-
-const { src, dest, watch, series, parallel } = require("gulp");
+const { src, dest, watch, series, parallel } = require('gulp');
 const sass = require('gulp-sass')(require('sass'));
-const cssnano = require("gulp-cssnano");
-const rename = require("gulp-rename");
-const uglify = require("gulp-uglify");
-const concat = require("gulp-concat");
-const imagemin = require("gulp-imagemin");
-const browserSync = require("browser-sync").create();
+const cssnano = require('gulp-cssnano');
+const imagemin = require('gulp-imagemin');
+const uglify = require('gulp-uglify');
+const concat = require('gulp-concat');
+const browserSync = require('browser-sync').create();
+const fileInclude = require('gulp-file-include');
 
+// --- Bootstrap таски ---
+const bootstrapCSS = () => {
+    return src('node_modules/bootstrap/dist/css/bootstrap.min.css')
+        .pipe(dest('dist/css'));
+}
 
-const paths = {
-    html: { src: "app/**/*.html", dest: "dist/" },
-    scss: { src: "app/scss/**/*.scss", dest: "dist/css/" },
-    js:   { src: "app/js/**/*.js",     dest: "dist/js/"  },
-    img:  { src: "app/img/**/*.{png,jpg,jpeg,svg,gif,webp}", dest: "dist/img/" }
+const bootstrapJS = () => {
+    return src('node_modules/bootstrap/dist/js/bootstrap.bundle.min.js')
+        .pipe(dest('dist/js'));
+}
+
+// --- HTML таска (об’єднання всіх сторінок та компонентів) ---
+const html_task = () => {
+    return src('app/*.html')
+        .pipe(fileInclude({
+            prefix: '@@',
+            basepath: '@file'
+        }))
+        .pipe(dest('dist'))
+        .pipe(browserSync.stream());
 };
-function html() {
-    return src(paths.html.src)
-        .pipe(rename(p => { p.dirname = ""; }))
-        .pipe(dest(paths.html.dest))
-        .pipe(browserSync.stream());
-}
 
-
-function styles() {
-    return src(paths.scss.src) 
-        .pipe(sass().on("error", sass.logError)) // не падай ти нам ще треба :)
+// --- SCSS таска ---
+const scss_task = () => {
+    return src([
+        'app/scss/**/*.scss'
+    ])
+        .pipe(sass().on('error', sass.logError))
+        .pipe(concat('style.min.css'))
         .pipe(cssnano())
-        .pipe(rename({ suffix: ".min" })) // style.min.css
-        .pipe(dest(paths.scss.dest))
+        .pipe(dest('dist/css'))
         .pipe(browserSync.stream());
-}
+};
 
-function scripts() {
-    return src(paths.js.src)
-        .pipe(concat("bundle.js"))
+// --- JS таска (усі JS з компонентів) ---
+const js_task = () => {
+    return src('app/js/**/*.js')
+        .pipe(concat('script.min.js'))
         .pipe(uglify())
-        .pipe(rename({ suffix: ".min" }))
-        .pipe(dest(paths.js.dest))
+        .pipe(dest('dist/js'))
+        .pipe(browserSync.stream());
+};
+
+// --- Images таска ---
+const img_task = () => {
+    return src('app/img/**/*.{webp,png,jpg,jpeg,svg}', { encoding: false })
+        .pipe(imagemin())
+        .pipe(dest('dist/img'))
+        .pipe(browserSync.stream());
+};
+
+const json_task = () => {
+    return src('app/json/data.json')
+        .pipe(dest('dist/json'))
         .pipe(browserSync.stream());
 }
 
-function images() {
-    return src(paths.img.src)
-        .pipe(imagemin())
-        .pipe(dest(paths.img.dest));
-}
+// --- BrowserSync та Watch ---
+const serve = () => {
+    browserSync.init({
+        server: {
+            baseDir: 'dist'
+        }
+    });
 
-function reload(done) { browserSync.reload(); done(); }
+    watch('app/**/*.html', html_task);
+    watch('app/**/*.scss', scss_task);
+    watch('app/js/**/*.js', js_task);
+    watch('app/img/**/*', img_task);
+    watch('app/json/*.json', json_task);
+};
 
-function serve() {
-    browserSync.init({ server: { baseDir: "dist" }, open: false, notify: false });
-    watch(paths.html.src, html);
-    watch(paths.scss.src, styles);
-    watch(paths.js.src, scripts);
-    watch(paths.img.src, series(images, reload));
-}
-
-const build = series(parallel(html, styles, scripts, images));
-
-exports.html = html;
-exports.styles = styles;
-exports.scripts = scripts;
-exports.images = images;
-exports.build = build;
-exports.default = series(build, serve);
+// --- Default таска ---
+exports.default = series(
+    parallel(html_task, scss_task, js_task, img_task,json_task, bootstrapCSS, bootstrapJS),
+    serve
+);

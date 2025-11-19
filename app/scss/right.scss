@@ -1,0 +1,117 @@
+$color-gray: #ebebeb;
+$color-dark: #252525;
+$color-text: #707070;
+$color-deep: #282828;
+$color-list: #222;
+$font-main: 'Arial', sans-serif;
+
+$padding-base: 20px;
+$font-base: 20px;
+
+@mixin text-style($size, $line, $color, $weight) {
+  font-size: $size;
+  line-height: $line;
+  color: $color;
+  font-weight: $weight;
+  font-family: $font-main;
+}
+
+.text-base {
+  font-family: $font-main;
+  color: $color-dark;
+  font-weight: 400;
+}
+
+.rh-bg {
+  background-color: $color-gray;
+}
+
+.lang-list {
+  list-style-type: square;
+  padding-left: $padding-base;
+  margin: 0;
+
+  li {
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: $color-list;
+    padding-left: $padding-base - 5px;
+    font-size: clamp(14px, 2vw, 18px);
+  }
+}
+
+.pad-3 {
+  padding-left: 50px;
+  padding-right: 60px;
+  padding-top: 65px;
+}
+
+.text-10 {
+  @extend .text-base;
+  @include text-style(clamp(14px, 1.6vw, 18px), 10px, $color-text, 400);
+  padding-top: 10px;
+}
+
+.text-11 {
+  @extend .text-base;
+  @include text-style(clamp(16px, 1.8vw, 20px), 10px, $color-dark, 400);
+}
+
+.text-12 {
+  @extend .text-base;
+  @include text-style(clamp(16px, 1.8vw, 20px), 10px, $color-dark, 300);
+}
+
+.text-13 {
+  @extend .text-base;
+  @include text-style(clamp(18px, 2vw, 22px), 37px, $color-deep, 500);
+}
+
+@media (max-width: 1440px) and (min-width: 1201px) {
+  .pad-3 {
+    padding-left: 45px;
+    padding-right: 50px;
+    padding-top: 60px;
+  }
+
+  .lang-list li {
+    margin-bottom: 8px;
+  }
+}
+
+@media (max-width: 1200px) and (min-width: 769px) {
+  .pad-3 {
+    padding-left: 40px;
+    padding-right: 40px;
+    padding-top: 50px;
+  }
+
+  .lang-list li {
+    margin-bottom: 7px;
+  }
+}
+
+@media (max-width: 768px) and (min-width: 481px) {
+  .pad-3 {
+    padding-left: 25px;
+    padding-right: 25px;
+    padding-top: 35px;
+  }
+
+  .lang-list li {
+    margin-bottom: 6px;
+  }
+}
+
+@media (max-width: 480px) {
+  .pad-3 {
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 25px;
+  }
+
+  .lang-list li {
+    margin-bottom: 5px;
+  }
+}
+
