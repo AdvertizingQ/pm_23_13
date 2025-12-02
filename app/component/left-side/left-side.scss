@@ -53,6 +53,8 @@ $gap-main: 30px;
 
 .text-4 {
   @include text-style(clamp(14px, 1.6vw, $font-size-base), $color-gray, 350, 25px);
+  margin-top: 0px;
+  margin-bottom: 5px;
 }
 
 .text-5 {
@@ -89,4 +91,62 @@ $gap-main: 30px;
 
 .pad-4 {
   padding-left: clamp(15px, 4vw, $padding-main + 40px);
+}
+.arrow {
+  transition: transform 0.3s ease;
+  cursor: pointer;
+}
+
+.arrow.rotated {
+  transform: rotate(90deg);
+}
+
+.experience-content {
+  display: none;
+  margin-top: 10px;
+}
+
+.experience-content.visible {
+  display: block;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.profile-content {
+  display: none;
+}
+
+.profile-content.visible {
+  display: block;
+  animation: fadeIn 0.3s ease;
+}
+
+.profile-arrow {
+  transition: transform 0.3s ease;
+  cursor: pointer;
+}
+
+.profile-arrow.rotated {
+  transform: rotate(90deg);
+}
+.reference-content {
+  display: none;
+}
+
+.reference-content.visible {
+  display: block;
+  animation: fadeIn 0.3s ease;
+  margin-top: 40px;
+}
+
+.reference-arrow {
+  transition: transform 0.3s ease;
+  cursor: pointer;
+}
+
+.reference-arrow.rotated {
+  transform: rotate(90deg);
 }
