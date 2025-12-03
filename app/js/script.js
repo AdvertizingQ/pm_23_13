@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Додаємо обробник кліку для кнопки незалежно від JSON
     const arrow = document.querySelector('.arrow');
     const content = document.querySelector('.experience-content');
 
@@ -10,7 +9,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Додаємо обробник кліку для блоку PROFILE
     const profileArrow = document.querySelector('.profile-arrow');
     const profileContent = document.querySelector('.profile-content');
 
@@ -21,7 +19,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Додаємо обробник кліку для блоку REFERENCE
     const referenceArrow = document.querySelector('.reference-arrow');
     const referenceContent = document.querySelector('.reference-content');
 
@@ -32,7 +29,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Завантаження JSON і робота з даними
     fetch('json/data.json')
         .then(response => response.json())
         .then(data => {
