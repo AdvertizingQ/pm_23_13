@@ -1,0 +1,152 @@
+$color-black: #000;
+$color-dark: #111111;
+$color-gray: #252525;
+$color-lightgray: #707070;
+$color-divider: #999;
+$color-white: #fff;
+
+$font-size-base: 20px;
+$padding-main: 30px;
+$gap-main: 30px;
+
+@mixin text-style($size, $color, $weight: 400, $line: normal) {
+  font-size: $size;
+  color: $color;
+  font-weight: $weight;
+  line-height: $line;
+}
+
+%pad-base {
+  display: flex;
+  align-items: flex-start;
+  position: relative;
+}
+
+.bg {
+  width: clamp(300px, 45vw, 650px);
+  height: clamp(70px, 7vw, 100px);
+  display: flex;
+  align-items: center;
+  margin-left: 20px;
+  background: $color-black;
+  gap: 80px;
+  transition: all 0.3s ease;
+  padding: clamp(10px, 2vw, 25px);
+}
+
+.text-1 {
+  @include text-style(clamp(14px, 1.6vw, $font-size-base), $color-white, 400, 10px);
+  padding-top: clamp(10px, 1vw, 20px);
+  padding-left: clamp(0px, 2vw, $padding-main);
+}
+
+.text-2 {
+  @include text-style(clamp(13px, 1.4vw, $font-size-base - 2px), $color-white, 300);
+  padding-left: clamp(0px, 2vw, $padding-main);
+}
+
+.text-3 {
+  @include text-style(clamp(18px, 2.2vw, $font-size-base + 10px), $color-dark, 700);
+  letter-spacing: clamp(1px, 0.3vw, 3px);
+  text-transform: uppercase;
+}
+
+.text-4 {
+  @include text-style(clamp(14px, 1.6vw, $font-size-base), $color-gray, 350, 25px);
+  margin-top: 0px;
+  margin-bottom: 5px;
+}
+
+.text-5 {
+  @include text-style(clamp(14px, 1.6vw, $font-size-base), $color-gray, 500, 15px);
+}
+
+.pad {
+  @extend %pad-base;
+}
+
+.divider {
+  width: 3px;
+  height: clamp(60px, 6vw, 85px);
+  background-color: $color-divider;
+  opacity: 0.8;
+  margin-right: clamp(10px, 1.5vw, 20px);
+}
+
+.text-7 {
+  @include text-style(clamp(14px, 1.5vw, $font-size-base), $color-lightgray, 300, 15px);
+}
+
+.text-8 {
+  @include text-style(clamp(14px, 1.5vw, $font-size-base), $color-gray, 400, 15px);
+}
+
+.text-9 {
+  @include text-style(clamp(14px, 1.5vw, $font-size-base), $color-gray, 350, 15px);
+}
+
+.pad-2 {
+  padding-left: clamp(10px, 2vw, $padding-main - 10px);
+}
+
+.pad-4 {
+  padding-left: clamp(15px, 4vw, $padding-main + 40px);
+}
+.arrow {
+  transition: transform 0.3s ease;
+  cursor: pointer;
+}
+
+.arrow.rotated {
+  transform: rotate(90deg);
+}
+
+.experience-content {
+  display: none;
+  margin-top: 10px;
+}
+
+.experience-content.visible {
+  display: block;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.profile-content {
+  display: none;
+}
+
+.profile-content.visible {
+  display: block;
+  animation: fadeIn 0.3s ease;
+}
+
+.profile-arrow {
+  transition: transform 0.3s ease;
+  cursor: pointer;
+}
+
+.profile-arrow.rotated {
+  transform: rotate(90deg);
+}
+.reference-content {
+  display: none;
+}
+
+.reference-content.visible {
+  display: block;
+  animation: fadeIn 0.3s ease;
+  margin-top: 40px;
+}
+
+.reference-arrow {
+  transition: transform 0.3s ease;
+  cursor: pointer;
+}
+
+.reference-arrow.rotated {
+  transform: rotate(90deg);
+}
